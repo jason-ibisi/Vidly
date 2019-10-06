@@ -106,9 +106,9 @@ class Movies extends Component {
       currentPage,
       sortColumn,
       genres,
-      searchQuery,
-      movies: allMovies
+      searchQuery
     } = this.state;
+    const { user } = this.props;
 
     if (count === 0) return <p>There are no movies in the database</p>;
 
@@ -118,20 +118,21 @@ class Movies extends Component {
       <div className="row">
         <div className="col-3">
           <GenreListGroup
-            movies={allMovies}
             items={genres}
             selectedItem={this.state.selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
         </div>
         <div className="col">
-          <Link
-            className="btn btn-primary"
-            to="/movies/new"
-            style={{ marginBottom: 20 }}
-          >
-            New Movie
-          </Link>
+          {user && (
+            <Link
+              className="btn btn-primary"
+              to="/movies/new"
+              style={{ marginBottom: 20 }}
+            >
+              New Movie
+            </Link>
+          )}
           <p>Showing {totalCount} movies in database</p>
           <SearchBar value={searchQuery} onChange={this.handleSearch} />
           <MoviesTable
